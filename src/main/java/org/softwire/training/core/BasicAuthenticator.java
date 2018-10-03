@@ -13,6 +13,9 @@ public class BasicAuthenticator implements Authenticator<BasicCredentials, UserP
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BasicAuthenticator.class);
 
+
+
+
     @Override
     public Optional<UserPrincipal> authenticate(BasicCredentials credentials) {
 

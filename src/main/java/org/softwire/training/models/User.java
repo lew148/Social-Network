@@ -12,21 +12,37 @@ public class User {
     /**
      * The user name uniquely identifies a user
      */
-    private String name;
+
+    private String username;
+    private String fullname;
+    private String password;
 
     public User() {}
 
+    public User(String username, String fullname, String password) {
+        this.setUsername(username);
+        this.setFullname(fullname);
+        this.setPassword(password);
+    }
+
     public User(String name) {
-        this.name = name;
+        this.username = name;
     }
 
-    public String getName() {
-        return name;
+
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String name) {
+        this.username = name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public String getFullname() {return fullname;}
+    public void setFullname(String fullname) {this.fullname = fullname;}
+
+    public String getPassword() {return password;}
+    public void setPassword(String password) {this.password = password;}
+
 
     /**
      * Below methods were automatically generated using IntelliJ and Guava.
@@ -37,18 +53,19 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equal(name, user.name);
+        return Objects.equal(username, user.username);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(name);
+        return Objects.hashCode(username);
     }
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-                .add("name", name)
+                .add("username", username)
                 .toString();
     }
+
 }

@@ -29,21 +29,21 @@ public class WallResourceTest {
                 new SocialEvent(new User("RonaldMcDonald"), "What's up?"));
         when(wallDao.readWall(USER)).thenReturn(events);
 
-        WallView wallView = resource.get(USER_PRINCIPAL, USER.getName());
+        WallView wallView = resource.get(USER_PRINCIPAL, USER.getUsername());
 
         assertThat(wallView.getSocialEvents(), equalTo(events));
     }
 
     @Test
     public void getRequestDisplaysLoggedInUser() {
-        WallView wallView = resource.get(USER_PRINCIPAL, USER.getName());
+        WallView wallView = resource.get(USER_PRINCIPAL, USER.getUsername());
 
         assertThat(wallView.getLoggedInUser(), equalTo(LOGGED_IN_USER));
     }
 
     @Test
     public void getRequestDisplaysUser() {
-        WallView wallView = resource.get(USER_PRINCIPAL, USER.getName());
+        WallView wallView = resource.get(USER_PRINCIPAL, USER.getUsername());
 
         assertThat(wallView.getSubject(), equalTo(USER));
     }
@@ -51,7 +51,7 @@ public class WallResourceTest {
     @Test
     public void postRequestWritesToWall() {
         String content = "It's always sunny";
-        resource.post(USER_PRINCIPAL, USER.getName(), content);
+        resource.post(USER_PRINCIPAL, USER.getUsername(), content);
 
         verify(wallDao, times(1))
                 .writeOnWall(USER, new SocialEvent(LOGGED_IN_USER, content));
@@ -59,9 +59,9 @@ public class WallResourceTest {
 
     @Test
     public void postRequestRedirectsBackToWall() {
-        Response response = resource.post(USER_PRINCIPAL, USER.getName(), "Some random content");
+        Response response = resource.post(USER_PRINCIPAL, USER.getUsername(), "Some random content");
 
         assertThat(response.getStatus(), equalTo(Response.Status.SEE_OTHER.getStatusCode()));
-        assertThat(response.getLocation().getPath(), equalTo("/wall/" + USER.getName()));
+        assertThat(response.getLocation().getPath(), equalTo("/wall/" + USER.getUsername()));
     }
 }
