@@ -20,6 +20,7 @@ import org.softwire.training.resources.HomePageResource;
 import org.softwire.training.resources.LandingPageResource;
 import org.softwire.training.resources.NewUserResource;
 import org.softwire.training.resources.WallResource;
+import org.softwire.training.views.HomePageView;
 
 /**
  * Main MyFace application

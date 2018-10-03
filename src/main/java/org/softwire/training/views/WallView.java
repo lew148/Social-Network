@@ -11,7 +11,7 @@ public class WallView extends View {
     private final List<SocialEvent> socialEvents;
 
     private final User subject;
-    private final User loggedInUser;
+    private  User loggedInUser;
 
     public WallView(
             List<SocialEvent> socialEvents,
@@ -33,5 +33,9 @@ public class WallView extends View {
 
     public User getLoggedInUser() {
         return loggedInUser;
+    }
+
+    public void resetLoggedInUser() {
+        loggedInUser = null;
     }
 }

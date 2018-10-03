@@ -15,7 +15,22 @@ public class BasicAuthenticator implements Authenticator<BasicCredentials, UserP
 
 
 
-
+/*
+This, currently, doesn't work, as there is a user signed in.
+ */
+//    @Override
+//    public Optional<UserPrincipal> authenticate(BasicCredentials credentials) {
+//
+//        UserPrincipal user = new UserPrincipal(new User(credentials.getUsername()));
+//
+//        if (user.getUser().getPassword().equals(credentials.getPassword())) {
+//            LOGGER.debug("Successfully authenticated user: {}", user);
+//            return Optional.of(user);
+//        } else {
+//            LOGGER.debug("Failed to authenticate user, incorrect password.  Username: {}", credentials.getUsername());
+//            return Optional.empty();
+//        }
+//    }
     @Override
     public Optional<UserPrincipal> authenticate(BasicCredentials credentials) {
 
