@@ -2,9 +2,12 @@ package org.softwire.training.db;
 
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
+import org.softwire.training.core.Utils;
 import org.softwire.training.models.User;
 
 public class UserDao {
+
+    Utils utils = new Utils();
 
     private final Jdbi jdbi;
     public UserDao(Jdbi jdbi) {

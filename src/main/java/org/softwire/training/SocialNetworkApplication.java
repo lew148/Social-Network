@@ -13,6 +13,7 @@ import org.jdbi.v3.core.Jdbi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.softwire.training.core.BasicAuthenticator;
+import org.softwire.training.core.Utils;
 import org.softwire.training.db.UserDao;
 import org.softwire.training.db.WallDao;
 import org.softwire.training.models.UserPrincipal;
@@ -59,6 +60,7 @@ public class SocialNetworkApplication extends Application<SocialNetworkConfigura
         final JdbiFactory factory = new JdbiFactory();
         final Jdbi jdbi = factory.build(environment, configuration.getDataSourceFactory(), "mysql");
         final WallDao dao = new WallDao(jdbi);
+        final Utils utils = new Utils();
 
         UserDao userDao = new UserDao(jdbi);
 

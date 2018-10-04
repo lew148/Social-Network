@@ -60,4 +60,22 @@ public class WallResource {
         wallDao.writeOnWall(subject, socialEvent);
         return Response.seeOther(URI.create("/wall/" + subjectName)).build();
     }
+
+
+    @POST
+    @Path("{subjectName}/delete")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response deletePost(
+            @Auth UserPrincipal userPrincipal,
+            @PathParam("subjectName") @NotEmpty String subjectName,
+            @FormParam("message") @NotEmpty String message) {
+        User subject = new User(subjectName);
+
+        LOGGER.info("Post to Wall. User: {} Subject: {} Message: {}",
+                userPrincipal, subject, message);
+
+        SocialEvent socialEvent = new SocialEvent(userPrincipal.getUser(), message);
+        wallDao.deletePost(subject, socialEvent);
+        return Response.seeOther(URI.create("/wall/" + subjectName)).build();
+    }
 }

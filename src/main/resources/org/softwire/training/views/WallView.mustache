@@ -15,6 +15,9 @@
                     <a class="header" href=/wall/{{author.username}}>{{author.username}}</a>
                     <div class="description">{{content}}</div>
                 </div>
+                <form action="/wall/{{subject.username}}/delete" method="post">
+                    <button type="submit">Delete</button>
+                </form>
             </div>
         {{/socialEvents}}
     </div>

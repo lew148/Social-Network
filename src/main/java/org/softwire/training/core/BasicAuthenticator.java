@@ -21,13 +21,15 @@ public class BasicAuthenticator implements Authenticator<BasicCredentials, UserP
         this.userDao = userDao;
     }
 
+    Utils utils = new Utils();
 
     @Override
     public Optional<UserPrincipal> authenticate(BasicCredentials credentials) {
 
+
         String expectedPassword = userDao.getUserByUsername(credentials.getUsername()).getPassword();
 
-        if (expectedPassword.equals(credentials.getPassword())) {
+        if (expectedPassword.equals(utils.hashString(credentials.getPassword()))) {
             UserPrincipal user = new UserPrincipal(new User(credentials.getUsername()));
             LOGGER.debug("Successfully authenticated user: {}", user);
             return Optional.of(user);

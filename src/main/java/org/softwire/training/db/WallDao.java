@@ -48,4 +48,19 @@ public class WallDao {
                     .invoke();
         }
     }
+
+
+    public void deletePost(User user, SocialEvent socialEvent) {
+
+        String content = socialEvent.getContent();
+        String author = socialEvent.getAuthor().getUsername();
+        String recipient = user.getUsername();
+
+        if (user.getUsername() == socialEvent.getAuthor().getUsername()) {
+            try (Handle handle = jdbi.open()) {
+                handle.createCall("DELETE * FROM social_events WHERE content = :content AND author = :author AND user = :recipient")
+                        .invoke();
+            }
+        }
+    }
 }

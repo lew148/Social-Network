@@ -3,6 +3,7 @@ package org.softwire.training.resources;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.softwire.training.core.Utils;
 import org.softwire.training.db.UserDao;
 import org.softwire.training.models.User;
 import org.softwire.training.views.NewUserView;
@@ -39,11 +40,13 @@ public class NewUserResource {
             @FormParam("fullname") @NotEmpty String fullname,
             @FormParam("password") @NotEmpty String password  ) {
 
-        // TODO: Implement this!
         LOGGER.error("This functionality is missing!  username: {}  fullname: {} password: {}",
                 username, fullname, password);
 
-        User user = new User(username, fullname, password);
+        Utils utils = new Utils();
+        String hashedPassword = utils.hashString(password);
+
+        User user = new User(username, fullname, hashedPassword);
 
         userDao.addUser(user);
 
