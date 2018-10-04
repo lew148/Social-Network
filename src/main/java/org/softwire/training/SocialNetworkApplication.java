@@ -71,7 +71,7 @@ public class SocialNetworkApplication extends Application<SocialNetworkConfigura
         // HTTP Basic Auth setup
         environment.jersey().register(new AuthDynamicFeature(
                 new BasicCredentialAuthFilter.Builder<UserPrincipal>()
-                        .setAuthenticator(new BasicAuthenticator())
+                        .setAuthenticator(new BasicAuthenticator(userDao))
                         .setRealm("Super Secret Social Network")
                         .buildAuthFilter()));
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(UserPrincipal.class));

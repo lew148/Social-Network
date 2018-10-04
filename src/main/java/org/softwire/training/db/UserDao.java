@@ -20,5 +20,15 @@ public class UserDao {
     }
 
 
+    public User getUserByUsername(String username) {
+        try(Handle handle = jdbi.open()) {
+            return handle.createQuery("SELECT * FROM users WHERE username = :username")
+                    .bind("username", username)
+                    .mapToBean(User.class)
+                    .findOnly();
+        }
+
+    }
+
 
 }
