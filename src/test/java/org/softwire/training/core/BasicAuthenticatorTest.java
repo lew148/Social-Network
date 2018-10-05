@@ -11,33 +11,46 @@ import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class BasicAuthenticatorTest {
 
     private BasicAuthenticator basicAuthenticator;
 
-    UserDao userDao = mock(UserDao.class);
+    UserDao mockUserDao = mock(UserDao.class);
+    Utils utils = new Utils();
 
     @BeforeEach
     public void beforeEach() {
-        basicAuthenticator = new BasicAuthenticator(userDao);
+        basicAuthenticator = new BasicAuthenticator(mockUserDao);
     }
 
     @Test
     public void handleCorrectPassword() {
-        String username = "username";
-        Optional<UserPrincipal> userPrincipal = basicAuthenticator.authenticate(
-                new BasicCredentials(username, "secret"));
+        String password = "password";
+        String hashedPassword = utils.hashString("password");
 
-        assertThat(userPrincipal, equalTo(Optional.of(new UserPrincipal(new User(username)))));
+        User fakeUser = new User("username","fake user",hashedPassword);
+        when(mockUserDao.getUserByUsername(anyString())).thenReturn(fakeUser);
+
+        Optional<UserPrincipal> userPrincipal = basicAuthenticator.authenticate(
+                new BasicCredentials(fakeUser.getUsername(), password));
+
+        assertThat(userPrincipal, equalTo(Optional.of(new UserPrincipal(new User(fakeUser.getUsername())))));
     }
 
     @Test
     public void handleIncorrectPassword() {
-        String username = "username";
+        String incorrectPassword = "notPassword";
+        String hashedPassword = utils.hashString("password");
+
+        User fakeUser = new User("username","fake user",hashedPassword);
+        when(mockUserDao.getUserByUsername(anyString())).thenReturn(fakeUser);
+
         Optional<UserPrincipal> userPrincipal = basicAuthenticator.authenticate(
-                new BasicCredentials(username, "incorrectpassword"));
+                new BasicCredentials(fakeUser.getUsername(), incorrectPassword));
 
         assertThat(userPrincipal, equalTo(Optional.empty()));
     }

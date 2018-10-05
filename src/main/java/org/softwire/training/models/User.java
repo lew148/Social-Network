@@ -20,9 +20,9 @@ public class User {
     public User() {}
 
     public User(String username, String fullname, String password) {
-        this.setUsername(username);
-        this.setFullname(fullname);
-        this.setPassword(password);
+            this.setUsername(username);
+            this.setFullname(fullname);
+            this.setPassword(password);
     }
 
     public User(String name) {
