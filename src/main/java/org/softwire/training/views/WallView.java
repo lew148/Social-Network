@@ -34,8 +34,4 @@ public class WallView extends View {
     public User getLoggedInUser() {
         return loggedInUser;
     }
-
-    public void resetLoggedInUser() {
-        loggedInUser = null;
-    }
 }

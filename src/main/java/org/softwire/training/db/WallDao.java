@@ -23,7 +23,7 @@ public class WallDao {
 
     public List<SocialEvent> readWall(User user) {
         try (Handle handle = jdbi.open()) {
-            return handle.createQuery("SELECT author AS username, content FROM social_events WHERE user = :user")
+            return handle.createQuery("SELECT author AS username, content, id FROM social_events WHERE user = :user")
                     .bind("user", user.getUsername())
                     .mapToBean(SocialEvent.class)
                     .list();
@@ -49,18 +49,22 @@ public class WallDao {
         }
     }
 
+    public SocialEvent getSocialEventById(int id) {
+        List<SocialEvent> socialEvent;
+        try (Handle handle = jdbi.open()) {
+            socialEvent = handle.createQuery("SELECT * FROM social_events WHERE id = " + id)
+                    .mapToBean(SocialEvent.class).list();
+        }
+        return socialEvent.get(0);
+    }
 
-    public void deletePost(User user, SocialEvent socialEvent) {
 
-        String content = socialEvent.getContent();
-        String author = socialEvent.getAuthor().getUsername();
-        String recipient = user.getUsername();
+    public void deletePost(int id) {
 
-        if (user.getUsername() == socialEvent.getAuthor().getUsername()) {
-            try (Handle handle = jdbi.open()) {
-                handle.createCall("DELETE * FROM social_events WHERE content = :content AND author = :author AND user = :recipient")
-                        .invoke();
-            }
+
+        try (Handle handle = jdbi.open()) {
+            handle.createUpdate("DELETE FROM social_events WHERE id = " + id)
+                    .execute();
         }
     }
 }

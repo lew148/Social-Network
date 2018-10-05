@@ -10,6 +10,7 @@ import org.softwire.training.models.SocialEvent;
 import org.softwire.training.models.User;
 import org.softwire.training.views.WallView;
 
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -63,19 +64,13 @@ public class WallResource {
 
 
     @POST
-    @Path("{subjectName}/delete")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Path("/delete/{subjectName}/{id}")
     public Response deletePost(
             @Auth UserPrincipal userPrincipal,
             @PathParam("subjectName") @NotEmpty String subjectName,
-            @FormParam("message") @NotEmpty String message) {
-        User subject = new User(subjectName);
+            @PathParam("id") @NotNull Integer id) {
 
-        LOGGER.info("Post to Wall. User: {} Subject: {} Message: {}",
-                userPrincipal, subject, message);
-
-        SocialEvent socialEvent = new SocialEvent(userPrincipal.getUser(), message);
-        wallDao.deletePost(subject, socialEvent);
+        wallDao.deletePost(id);
         return Response.seeOther(URI.create("/wall/" + subjectName)).build();
     }
 }

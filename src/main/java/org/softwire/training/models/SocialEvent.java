@@ -19,6 +19,9 @@ public class SocialEvent {
      */
     private String content;
 
+
+    private int id;
+
     public SocialEvent() {}
 
     public SocialEvent(User author, String content) {
@@ -67,5 +70,13 @@ public class SocialEvent {
                 .add("author", author)
                 .add("content", content)
                 .toString();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

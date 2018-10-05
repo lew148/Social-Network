@@ -14,10 +14,11 @@
                 <div class="content">
                     <a class="header" href=/wall/{{author.username}}>{{author.username}}</a>
                     <div class="description">{{content}}</div>
-                </div>
-                <form action="/wall/{{subject.username}}/delete" method="post">
+
+                <form action="/wall/delete/{{subject.username}}/{{id}}" method="post">
                     <button type="submit">Delete</button>
                 </form>
+                </div>
             </div>
         {{/socialEvents}}
     </div>
